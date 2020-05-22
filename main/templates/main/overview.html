@@ -1,0 +1,55 @@
+{% extends 'main/base.html' %}
+
+{% block body %}
+  <center>
+<h2>  </h2>
+<form  action="/" method="POST" >
+    {% csrf_token %}
+    <table id="customers">
+        <tr>
+        <th>Name</th>
+         <th>Quantity</th>
+    <th>Buy Price</th>
+    <th>Trade Type</th>
+            <th> Date </th>
+       <th> Add Stock </th>
+        </tr>
+        <tr>
+            <td> {{ form.name }} </td>
+            <td> {{ form.quantity }} </td>
+            <td> {{ form.buy_price }} </td>
+            <td> {{ form.trade_type }} </td>
+           <td>{{ form.date_buy  }} </td>
+            <td><input type="submit"> </td> </tr>
+        </tr>
+
+</form>
+
+  <table id="customers">
+  <tr>
+      <th>Sr No.</th>
+      <th>Name</th>
+    <th>Date</th>
+    <th>Quantity</th>
+    <th>Buy Price</th>
+      <th>Selling Price</th>
+      <th> Sold </th>
+
+  </tr>
+      {% for each_overview in all_overview %}
+  <tr>
+      <td>{{ each_overview.id }}</td>
+      <td>{{each_overview.name}}</td>
+      <td>{{each_overview.date_buy}}</td>
+    <td>{{each_overview.quantity}}</td>
+    <td>{{each_overview.buy_price}}</td>
+      <td> <input type="number" id="sell_stock" name="sell_stock" > </td>
+   <td>   <button type="button" class="btn btn-danger"  >Done</button></td>
+  </tr>
+      {% endfor %}
+</table>
+</center>
+{% endblock %}
+
+
+

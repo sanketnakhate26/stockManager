@@ -1,0 +1,26 @@
+{% extends 'main/base.html' %}
+
+{% block body %}
+<h2> Add Stock </h2>
+<hr>
+
+<form  action="/add/" method="POST" >
+    {% csrf_token %}
+    <table id="customers">
+        <tr>
+        <th>Name</th>
+         <th>Quantity</th>
+    <th>Buy Price</th>
+    <th>Trade Type</th>
+       <th> Action </th>
+        </tr>
+        <tr>
+            <td> {{ form.name }} </td>
+            <td> {{ form.quantity }} </td>
+            <td> {{ form.buy_price }} </td>
+            <td> {{ form.trade_type }} </td>
+            <td><input type="submit"> </td> </tr>
+        </tr>
+
+</form>
+{% endblock %}
