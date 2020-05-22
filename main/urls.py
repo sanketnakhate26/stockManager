@@ -3,5 +3,5 @@ from . import views
 
 urlpatterns = [
     url('^$', views.overview, name='overview'),
-    url('^add/', views.addstock, name='addstock'),
+    url('^history/', views.history, name='history'),
 ]

@@ -23,6 +23,7 @@ class History(models.Model):
     trade_type = models.CharField(max_length=25, choices=TRADE_CHOICES, default='DELIVERY')
     date_buy = models.DateTimeField(default=datetime.now)
     date_sell = models.DateTimeField(default=datetime.now)
+    profit_loss = models.FloatField(default=0)
 
     def __str__(self):
         return self.name
