@@ -25,7 +25,7 @@ def overview(request):
             sellprice = request.POST['sell_stock']
             instance = Overview.objects.get(id=target_id)
 
-            record = History(name=instance.name, quantity=instance.quantity, buy_price=float(instance.buy_price), sell_price=float(sellprice), trade_type=instance.trade_type, date_buy=instance.date_buy, profit_loss=(float(sellprice)-float(instance.buy_price)))
+            record = History(name=instance.name, quantity=instance.quantity, buy_price=float(instance.buy_price), sell_price=float(sellprice), trade_type=instance.trade_type, date_buy=instance.date_buy, profit_loss=( instance.quantity * (float(sellprice)-float(instance.buy_price))))
             record.save()
             instance.delete()
     context = {'form': form,'all_overview': all_overview}
