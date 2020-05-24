@@ -1,10 +1,9 @@
-{% extends 'main/base.html' %}
+{% extends 'main/base_app_history.html' %}
 
 {% block body %}
 
 <center>
-    <input type="button" class="btn btn-success" value="Total Earnings : {{ Total_profit_loss }}">
-
+<button class="button button3" >Total Earnings : {{ Total_profit_loss }}</button>
 <table id="customers">
       <h2>  </h2>
   <tr>
@@ -14,22 +13,29 @@
       <th>Trade Type</th>
       <th>Buy Price</th>
       <th>Selling Price</th>
+      <th>Tax</th>
       <th>Selling Date</th>
       <th> Profit / Loss </th>
 
   </tr>
+          {% Total_profit_loss = 0 %}
+     {% Total_profit_loss = Total_profit_loss + 1 %}
+
       {% for each_row in data %}
+    {% if user.username == each_row.username %}
   <tr>
       <td>{{each_row.name}}</td>
       <td>{{each_row.quantity}}</td>
       <td>{{each_row.trade_type}}</td>
       <td>{{each_row.buy_price}}</td>
       <td>{{each_row.sell_price}}</td>
+      <td>{{each_row.tax}}</td>
       <td> {{each_row.date_sell}}  </td>
       <td> {{each_row.profit_loss}} </td>
 
 
   </tr>
+    {% endif %}
       {% endfor %}
 </table>
 </center>

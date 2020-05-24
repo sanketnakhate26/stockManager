@@ -59,7 +59,9 @@
 .topnav-right {
   float: right;
 }
-
+.login-container button:hover {
+  background-color: green;
+}
 </style>
 
     <!-- Required meta tags -->
@@ -72,12 +74,23 @@
     <title>stockManager</title>
 </head>
 <body>
+
+
 <!-- Grey with black text -->
 <div class="topnav">
+    <div>
   <a class="active" href="/">stockManager</a>
   <a href="/history/">History</a>
-
+    </div>
+    <div class="topnav-right">
+        <label> Hii {{user.username}}</label>
+    <form method="POST" action="/logout/" >
+    {% csrf_token %}
+    <button type="button" value="logout" class="btn btn-danger" type="submit">Logout</button>
+    </form>
+ </div>
 </div>
+
 
 {% block body %}
 

@@ -1,4 +1,4 @@
-{% extends 'main/base.html' %}
+{% extends 'main/base_app_home.html' %}
 
 {% block body %}
 <script>
@@ -12,11 +12,13 @@ if ( price== "") {
 return true;
 }
 
+
 </script>
 
 
   <center>
-<h2>  </h2>
+<button class="button button3" > ADD Stock </button>
+
 <form  action="/" method="POST" >
     {% csrf_token %}
     <table id="customers">
@@ -34,13 +36,15 @@ return true;
             <td> {{ form.buy_price }} </td>
             <td> {{ form.trade_type }} </td>
            <td>{{ form.date_buy  }} </td>
-            <td><input type="submit" name="create_post" style="color:white;
-background-color:green"> </td> </tr>
+            <input type="text" value={{user}} name="username" hidden>
+            <td><input style="font-size:20px;background-color:#18F918;" type="submit" name="create_post"> </td> </tr>
         </tr>
 
 </form>
+
       <table id="customers">
-      <h2>  </h2>
+          <tr><button class="button button3"  > PORTFOLIO </button></tr>
+
   <tr>
 <!--      <th>Sr No.</th>-->
       <th>Name</th>
@@ -53,26 +57,27 @@ background-color:green"> </td> </tr>
 
   </tr>
       {% for each_overview in all_overview %}
+          {% if each_overview.username == user.username %}
   <tr>
 <!--      <td>{{ each_overview.id }}</td>-->
 <!--      <td>{{each_overview.name}}</td>-->
-      <td> <input type="text" size="12" name="stockname" value={{each_overview.name}} disabled></td>
-      <td> <input type="text" size="12" name="stockquantity" value={{each_overview.quantity}} disabled></td>
-      <td> <input type="text" size="12" name="stockbuy_price" value={{each_overview.buy_price}} disabled></td>
-      <td> <input type="text" size="12" name="stocktrade" value={{each_overview.trade_type}} disabled></td>
+      <td> <input style="font-size:16px;" type="text" size="12" name="stockname" value={{each_overview.name}} disabled></td>
+      <td> <input style="font-size:16px;" type="text" size="12" name="stockquantity" value={{each_overview.quantity}} disabled></td>
+      <td> <input style="font-size:16px;" type="text" size="12" name="stockbuy_price" value={{each_overview.buy_price}} disabled></td>
+      <td> <input style="font-size:16px;" type="text" size="12" name="stocktrade" value={{each_overview.trade_type}} disabled></td>
       <td> {{each_overview.date_buy}}  </td>
 <!--      <td>{{each_overview.quantity}}</td>-->
 <!--      <td>{{each_overview.buy_price}}</td>-->
 <!--      <td>{{each_overview.trade_type}}</td>-->
 <!--      <td>{{each_overview.date_buy}}</td>-->
       <form  action="/" method="POST" onsubmit="return validateSell()" >
-      <td> <input type="number" id="sell_stock" name="sell_stock" > </td>
+      <td> <input style="font-size:16px;" type="number" id="sell_stock" name="sell_stock" > </td>
    <td>
 
         {% csrf_token %}
         <input name="stock_id" value="{{each_overview.id}}" hidden>
-           <input type="submit" value="Sell Stock"  name="delete_post" style="color:white;
-background-color:red" >
+           <input type="submit" style="font-size:20px;background-color:#F93018;" value="Sell Stock"  name="sell_post">
+          <input type="submit" style="font-size:20px;background-color:#F93018;" value="Sell Stock"  name="delete_post">
        </form>
 <!--       <form  action="/" method="POST" >-->
 <!--           {% csrf_token %}-->
@@ -84,6 +89,7 @@ background-color:red" >
 
        </td>
   </tr>
+                    {% endif %}
       {% endfor %}
 </table>
 </center>
