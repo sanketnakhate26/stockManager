@@ -17,7 +17,7 @@ return true;
 
 
   <center>
-<button class="button button3" > ADD Stock </button>
+<button class="button button3" disabled> ADD Stock </button>
 
 <form  action="/" method="POST" >
     {% csrf_token %}
@@ -43,7 +43,7 @@ return true;
 </form>
 
       <table id="customers">
-          <tr><button class="button button3"  > PORTFOLIO </button></tr>
+          <tr><button class="button button3"  disabled> PORTFOLIO </button></tr>
 
   <tr>
 <!--      <th>Sr No.</th>-->
@@ -65,6 +65,7 @@ return true;
       <td> <input style="font-size:16px;" type="text" size="12" name="stockquantity" value={{each_overview.quantity}} disabled></td>
       <td> <input style="font-size:16px;" type="text" size="12" name="stockbuy_price" value={{each_overview.buy_price}} disabled></td>
       <td> <input style="font-size:16px;" type="text" size="12" name="stocktrade" value={{each_overview.trade_type}} disabled></td>
+
       <td> {{each_overview.date_buy}}  </td>
 <!--      <td>{{each_overview.quantity}}</td>-->
 <!--      <td>{{each_overview.buy_price}}</td>-->
@@ -76,9 +77,16 @@ return true;
 
         {% csrf_token %}
         <input name="stock_id" value="{{each_overview.id}}" hidden>
+        <input name="login_username" value='{{user.username}}' hidden>
            <input type="submit" style="font-size:20px;background-color:#F93018;" value="Sell Stock"  name="sell_post">
-          <input type="submit" style="font-size:20px;background-color:#F93018;" value="Sell Stock"  name="delete_post">
        </form>
+      <form action="/" method="POST">
+                  {% csrf_token %}
+                  <input name="login_username" value='{{user.username}}' hidden>
+        <input name="stock_id" value="{{each_overview.id}}" hidden>
+          <input type="submit" style="font-size:20px;background-color:#F93018;" value="Delete Stock"  name="delete_post">
+
+      </form>
 <!--       <form  action="/" method="POST" >-->
 <!--           {% csrf_token %}-->
 <!--           <input name="stock_id" value="{{each_overview.id}}" hidden>-->

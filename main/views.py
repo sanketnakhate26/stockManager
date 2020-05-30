@@ -10,6 +10,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.http import QueryDict
 
+Global_user = ""
 
 def calculateTax(price, type):
     tax = 0
@@ -26,6 +27,7 @@ def calculateTax(price, type):
 
 @login_required(login_url="/login/")
 def overview(request):
+    print("In overview",Global_user)
     all_overview = Overview.objects.all()
     context = {'all_overview': all_overview}
     form = OverviewForm()
@@ -42,23 +44,29 @@ def overview(request):
         if 'update_post' in request.POST:
             data_test = {}
             # print('update post')
-            print(request.POST)
         if 'sell_post' in request.POST:
             target_id = request.POST['stock_id']
             sellprice = request.POST['sell_stock']
+            login_username = request.POST['login_username']
             instance = Overview.objects.get(id=target_id)
             total_tax = calculateTax( (instance.buy_price + float(sellprice)), instance.trade_type)
-            record = History(name=instance.name, quantity=instance.quantity, buy_price=float(instance.buy_price), sell_price=float(sellprice), trade_type=instance.trade_type, date_buy=instance.date_buy, tax=total_tax, profit_loss=((instance.quantity * (float(sellprice)-float(instance.buy_price)))- total_tax))
+            record = History(name=instance.name, quantity=instance.quantity, buy_price=float(instance.buy_price), sell_price=float(sellprice), trade_type=instance.trade_type, username=login_username, date_buy=instance.date_buy, tax=total_tax, profit_loss=((instance.quantity * (float(sellprice)-float(instance.buy_price)))- total_tax))
             record.save()
+            instance.delete()
+        if 'delete_post' in request.POST:
+            target_id = request.POST['stock_id']
+            instance = Overview.objects.get(id=target_id)
             instance.delete()
     context = {'form': form,'all_overview': all_overview}
     return render(request,'main/overview.html',context)
 
 @login_required(login_url="/login/")
 def history(request):
+
     data = History.objects.all()
-    Total_profit_loss = History.objects.aggregate(Sum('profit_loss'))['profit_loss__sum']
-    print(Total_profit_loss)
+    # Total_profit_loss = History.objects.aggregate(Sum('profit_loss'))['profit_loss__sum']
+    # print(Total_profit_loss)
+    Total_profit_loss = 0
     context = {'data': data, 'Total_profit_loss': Total_profit_loss}
     return render(request,'main/history.html',context)
 
@@ -70,6 +78,9 @@ def user_login(request):
         user = authenticate(request,username=username,password=password)
         if user:
             login(request,user)
+            Global_user = user.username
+            print(user.username)
+            print(type(Global_user))
             if request.GET.get('next',None):
                 return HttpResponseRedirect(request.GET['next'])
             return HttpResponseRedirect('/')

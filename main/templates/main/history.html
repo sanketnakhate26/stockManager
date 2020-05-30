@@ -3,7 +3,7 @@
 {% block body %}
 
 <center>
-<button class="button button3" >Total Earnings : {{ Total_profit_loss }}</button>
+<button class="button button3" disabled >Total Earnings : {{ Total_profit_loss }}</button>
 <table id="customers">
       <h2>  </h2>
   <tr>
@@ -18,11 +18,11 @@
       <th> Profit / Loss </th>
 
   </tr>
-          {% Total_profit_loss = 0 %}
-     {% Total_profit_loss = Total_profit_loss + 1 %}
+
 
       {% for each_row in data %}
     {% if user.username == each_row.username %}
+
   <tr>
       <td>{{each_row.name}}</td>
       <td>{{each_row.quantity}}</td>
